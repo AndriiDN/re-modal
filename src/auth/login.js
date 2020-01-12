@@ -1,5 +1,17 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
+
+const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
 
 export default class Login extends Component{
     constructor(props) {
@@ -12,6 +24,8 @@ export default class Login extends Component{
             errorText: ''
         }
         this.toggleForm = this.toggleForm.bind(this)
+        this.openModal = this.openModal.bind(this)
+        this.closeModal = this.closeModal.bind(this)
         this.loginUser = this.loginUser.bind(this)
         this.changeInput = this.changeInput.bind(this)
     }
@@ -51,6 +65,19 @@ export default class Login extends Component{
             })
     }
 
+    openModal() {
+        this.setState({
+            formShow: true
+        })
+      }
+
+
+    closeModal(){
+        this.setState({
+            formShow: false
+        })
+      }
+
     changeInput(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -60,9 +87,16 @@ export default class Login extends Component{
     render() {
         return (
             <div>
-                <button className={'btn btn-primary'} onClick={this.toggleForm}>Sign In</button>
-                {this.state.formShow &&
+                <button className={'btn btn-primary'} onClick={this.openModal}>Sign In</button>
+                <Modal
+                isOpen={this.state.formShow}
+                onRequestClose={this.closeModal}
+                style={customStyles}
+                contentLabel="Login Form"
+                >
+                    
                 <div id="form">
+                    <button onClick={this.closeModal}>close</button>
                     {this.state.errorStatus &&
                     <div className='alert alert-danger'>{this.state.errorText}</div>
                     }
@@ -73,9 +107,11 @@ export default class Login extends Component{
                         <input type="password" name='password' value={this.state.password} placeholder='Password' onChange={this.changeInput}/>
                         <button type='submit' className={'btn btn-success'}>Login</button>
 
+                        
+
                     </form>
                 </div>
-                }
+                </Modal>
             </div>
         );
     }
