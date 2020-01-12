@@ -91,12 +91,35 @@ export default class Login extends Component{
                 <Modal
                 isOpen={this.state.formShow}
                 onRequestClose={this.closeModal}
-                style={customStyles}
+                style={{
+                    overlay: {
+                      position: 'fixed',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: 'rgba(55, 255, 255, 0.75)'
+                    },
+                    content: {
+                      position: 'absolute',
+                      top: '40px',
+                      left: '40px',
+                      right: '40px',
+                      bottom: '40px',
+                      border: '1px solid #ccc',
+                      background: '#fff',
+                      overflow: 'auto',
+                      WebkitOverflowScrolling: 'touch',
+                      borderRadius: '4px',
+                      outline: 'none',
+                      padding: '80px'
+                    }
+                  }}
                 contentLabel="Login Form"
                 >
                     
                 <div id="form">
-                    <button onClick={this.closeModal}>close</button>
+                    <button className={'close-btn'} onClick={this.closeModal}>close</button>
                     {this.state.errorStatus &&
                     <div className='alert alert-danger'>{this.state.errorText}</div>
                     }
